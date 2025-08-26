@@ -1,4 +1,4 @@
-# Custom-Domain (Python) – Step-by-Step README
+# Custom-Domain (Python)
 
 This project automates HTTPS for a domain on an Ubuntu server using **Nginx** + **Certbot** and Python helpers (**dnspython**, **cryptography**, **nginxparser**). You’ll manage domains with `manage_domain.py` and verify DNS with `verify_dns.py` inside a Python **virtual environment (venv)**.
 
