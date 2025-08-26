@@ -1,0 +1,79 @@
+# Log files
+*.log
+logs/
+**/logs/
+
+# Scripts logs
+scripts/*.log
+scripts/setup.log
+scripts/domain-manager.log
+scripts/dns-verify.log
+
+# Nginx logs
+nginx-logs/
+*.access.log
+*.error.log
+
+# Certbot logs
+certbot-logs/
+letsencrypt-logs/
+
+# Temporary files
+*.tmp
+*.temp
+*.swp
+*.swo
+*~
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# IDE files
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+
+# Node modules (if any)
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Build outputs
+dist/
+build/
+*.tsbuildinfo
+
+# Environment files
+.env
+.env.local
+.env.*.local
+
+# Backup files
+*.backup
+*.bak
+*.old
+
+# Certificate files (for security)
+*.pem
+*.key
+*.crt
+*.csr
+*.p12
+*.pfx
+
+# Database files
+*.db
+*.sqlite
+*.sqlite3
+
+# Cache directories
+.cache/
+cache/

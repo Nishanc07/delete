@@ -1,0 +1,35 @@
+name: Build and Zip Lambda
+
+on:
+  push:
+    branches:
+      - lamda-func
+  workflow_dispatch:
+
+jobs:
+  build-and-zip:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout Code
+      uses: actions/checkout@v3
+
+    - name: Set up Node.js
+      uses: actions/setup-node@v3
+      with:
+        node-version: '16'
+
+    - name: Install Dependencies
+      working-directory: lamda
+      run: npm install
+
+    - name: Zip Lambda Directory
+      run: |
+        zip -r lamda.zip .
+      working-directory: lamda
+
+    - name: Upload Lambda ZIP
+      uses: actions/upload-artifact@v3
+      with:
+        name: lamda-artifact
+        path: lamda/lamda.zip

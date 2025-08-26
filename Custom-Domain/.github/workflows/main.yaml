@@ -1,0 +1,53 @@
+name: Deploy CDK -dev
+
+on:
+  push:
+    branches:
+      - main
+
+permissions:
+  id-token: write
+  contents: read
+
+env:
+  AWS_REGION: ${{ secrets.AWS_REGION }}
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: ${{ secrets.AWS_ROLE_TO_ASSUME_DEV }}
+          aws-region: ${{ secrets.AWS_REGION }}
+
+      - name: Install Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '16'
+
+      - name: Install dependencies
+        run: |
+          npm install
+
+      - name: Install AWS CDK globally
+        run: npm install -g aws-cdk
+
+      - name: Deploy CDK app
+        run: |
+          pwd
+          cdk deploy --require-approval never --context env=${{ env.DEPLOY_ENV }}
+        env:
+          DEPLOY_ENV: dev
+          CDK_REGION: ${{ secrets.AWS_REGION }}
+          CDK_LISTENER_ARN: ${{ secrets.DEV_LISTENER_ARN }}
+          CDK_TARGET_GROUP_ARN: ${{ secrets.DEV_TARGET_GROUP_ARN }}
+          CDK_ELB_ENDPOINT: ${{ secrets.DEV_ELB_ENDPOINT }}
+          CDK_VERIFY_URL: ${{ secrets.DEV_VERIFY_URL }}
+          CDK_A_RECORD_IPS: ${{ secrets.DEV_A_RECORD_IPS || '["192.168.1.1", "192.168.1.2", "192.168.1.3"]' }}
+          CDK_FORCE_DNS_SUCCESS: ${{ secrets.DEV_FORCE_DNS_SUCCESS || 'false' }}
+          CDK_DNS_SERVERS: ${{ secrets.DEV_DNS_SERVERS || '["8.8.8.8", "8.8.4.4"]' }}
